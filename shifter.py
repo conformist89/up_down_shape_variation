@@ -133,4 +133,5 @@ def plot_values():
                     os.makedirs(directory)
                 canv.SaveAs(directory+str(categories[cat])+"_"+pairs[0][:-4]+".png")
 
-plot_values()
+if __name__ == '__main__':
+    plot_values()
