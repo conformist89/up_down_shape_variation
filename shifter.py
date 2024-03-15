@@ -1,16 +1,33 @@
 import ROOT as R
 import os 
-from styles import ModTDRStyle, color_dict, process_labels
 
 R.gROOT.SetBatch()
-ModTDRStyle()
+import json
 
 
-file_shapes = R.TFile.Open("/work/olavoryk/tau_pog_tau_sfs/tauid_multifit/smhtt_ul/output/tight-2016postVFP-mt-2016postVFP_meas_tauid_v1-tight_vs_ele_id_es_v3/synced/htt_mt.inputs-sm-Run2016-ML.root", "read")
+
+
+# file_shapes = R.TFile.Open("/work/olavoryk/tau_pog_tau_sfs/tauid_multifit/smhtt_ul/output/tight-2016postVFP-mt-2016postVFP_meas_tauid_v1-tight_vs_ele_id_es_v3/synced/htt_mt.inputs-sm-Run2016-ML.root", "read")
+
+
+def in_out_put():
+    with open('input_output_config.json') as f:
+        d = json.load(f)
+        input_file = d['input_file']
+        out_folder = d['output_folder']
+
+        return input_file, out_folder
+
+# print(in_out_put()[0])
+# print(in_out_put()[1])
+
 
 
 def plot_values():
     categories = []
+    input_file = in_out_put()[0]
+    out_fold = in_out_put()[1]
+    file_shapes = R.TFile(input_file)
     for k in file_shapes.GetListOfKeys():
         cat = k.ReadObj()
         category = cat.GetName()
@@ -36,7 +53,7 @@ def plot_values():
                 # print(pairs)
 
                 R.gStyle.SetOptStat(0)
-                R.gStyle.SetTitleFontSize(0.01)
+                R.gStyle.SetTitleFontSize(0.05)
                 
 
                 canv = R.TCanvas("c", "c", 1000, 950)
@@ -93,10 +110,6 @@ def plot_values():
                 down_shape.Draw("HIST SAME")
 
                 legend.Draw()
-
-                text1 = R.TLatex(15,400+165,str(pairs[0][:-12]))
-                text1.SetTextSize(0.04)
-                text1.Draw()
            
 
 
@@ -128,7 +141,7 @@ def plot_values():
                 ratio_up.Draw()
                 ratio_down.Draw("same")
                 canv.Draw()
-                directory = "/home/olavoryk/helper/2016UL/up_down_unc_ratio_v7/"+str(categories[cat])+"/"
+                directory = out_fold+str(categories[cat])+"/"
                 if not os.path.exists(directory):
                     os.makedirs(directory)
                 canv.SaveAs(directory+str(categories[cat])+"_"+pairs[0][:-4]+".png")
