@@ -5,11 +5,6 @@ R.gROOT.SetBatch()
 import json
 
 
-
-
-# file_shapes = R.TFile.Open("/work/olavoryk/tau_pog_tau_sfs/tauid_multifit/smhtt_ul/output/tight-2016postVFP-mt-2016postVFP_meas_tauid_v1-tight_vs_ele_id_es_v3/synced/htt_mt.inputs-sm-Run2016-ML.root", "read")
-
-
 def in_out_put():
     with open('input_output_config.json') as f:
         d = json.load(f)
@@ -17,10 +12,6 @@ def in_out_put():
         out_folder = d['output_folder']
 
         return input_file, out_folder
-
-# print(in_out_put()[0])
-# print(in_out_put()[1])
-
 
 
 def plot_values():
@@ -33,16 +24,13 @@ def plot_values():
         category = cat.GetName()
         # print(category)
         categories.append(category)
-    for cat in range(len(categories)):
-    # for cat in range(len(["mt_DM_0", "DM1", "DM_10_11"])):
-    # for cat in range(len(["mt_DM_0",])):
+    for cat in range(len(categories)): # categories ["mt_DM_0", "DM1", "DM_10_11"]
         shapes_list = []
         for i in range(len(file_shapes.Get(str(categories[cat])).GetListOfKeys())):
             shapes_list.append(file_shapes.Get(categories[cat]).GetListOfKeys()[i].GetName())
         print(shapes_list)
 
-        for i in range(len(shapes_list)):
-        # for i in range(len(['EMB_DM0', 'EMB_DMO_CMS_scale_temb_1prong_Run2016Down', 'EMB_DMO_CMS_scale_temb_1prong_Run2016Up'])):
+        for i in range(len(shapes_list)): # shapes list ['EMB_DM0', 'EMB_DMO_CMS_scale_temb_1prong_Run2016Down', 'EMB_DMO_CMS_scale_temb_1prong_Run2016Up']
             pairs = []
             if "Down" in shapes_list[i]:
                 shapes_list[i][:-4] == shapes_list[i+1][:-2]
@@ -50,7 +38,6 @@ def plot_values():
                 pairs.append(shapes_list[i+1])
                 nom  = pairs[0][:pairs[0].find("CMS")-1]
                 pairs.append(nom)
-                # print(pairs)
 
                 R.gStyle.SetOptStat(0)
                 R.gStyle.SetTitleFontSize(0.05)
