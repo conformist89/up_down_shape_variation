@@ -12,7 +12,8 @@ Before the execution activate cvmfs for `centos7`:
 source /cvmfs/sft.cern.ch/lcg/views/LCG_100/x86_64-centos7-gcc10-opt/setup.sh
 ```
 
-And specity input file and output folder in `input_output.json` config file
+And specity input file and output folder in `input_output.json` config file. 
+Input file should is a file produce after SYNC step   [here](https://github.com/conformist89/smhtt_ul/blob/master/embeddded_tauID_ul2018.sh#L147)
 
 Usage of the script is quite simple:
 
